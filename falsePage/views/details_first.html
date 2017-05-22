@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="detailApp">
+<head>
+    <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'  'unsafe-inline'; style-src 'self' 'unsafe-inline';"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name = "format-detection" content = "telephone=no">
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'  'unsafe-inline'; style-src 'self' 'unsafe-inline';"/>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/swiper.min.css">
+    <link rel="stylesheet" href="../css/layer.css">
+    <title>魅客详情</title>
+    <script>
+        var s = document.documentElement.clientWidth;
+        document.documentElement.style.fontSize = s/25+ "px";
+    </script>
+    <script src="../libs/angular.min.js"></script>
+</head>
+<body ng-controller="detailCtr" ng-cloak>
+    <div class="wrap wrapper2">
+        <div class="msg-view">
+          <div class="info">
+              <div class="part1 clear">
+                  <div class="person">
+                      <img ng-src="{{babyInfo.photo}}">
+                  </div>
+                  <div class="text">
+                      <p>{{babyInfo.nickName}}(<span>{{babyInfo.orderCounter}}单</span>)</p>
+                      <div class="sex clear">
+                        <p>服务范围：<span>{{scaleName}}</span></p>
+                      </div>
+                  </div>
+              </div>
+              <div class="focus" ng-click="guanZhu()">
+                  <img ng-src="{{isAttention==1?'../images/cancelFocus.png':'../images/focus.png'}}">
+              </div>
+
+          </div>
+          <div class="more clear">
+            <div class="evaluate">
+                <p>评价</p>
+                <div class="score clear" id="score">
+                    <div class="star" id="star_con">
+                        <div class="yellow" id="add_star"></div>
+                        <div class="gray"  id="del_star"></div>
+                    </div>
+                    <span>{{rateAvg}}</span>
+                </div>
+            </div>
+              <div class="level">
+                  <p>等级</p>
+                  <p><img ng-src="{{babyInfo.gradeImg}}" alt=""></p>
+              </div>
+              <div class="price">
+                  <p>定价</p>
+                  <p class="priceView">￥{{babyInfo.gradePrice}}</p>
+              </div>
+          </div>
+        </div>
+        <div ng-class="isClass ? 'banner-view' :''" ng-click="changeClass()">
+          <div class="swiper-container" ng-class="isClass? 'swiper-margin' :'' ">
+              <ul class="images swiper-wrapper">
+                  <li class="swiper-slide" ng-repeat="item in imgList"><img ng-src="{{item}}"/></li>
+              </ul>
+              <div class="swiper-pagination"></div>
+          </div>
+        </div>
+        <div class="area">
+            <p>服务场所：<span>{{babyInfo.placeName}}</span></p>
+        </div>
+        <!-- <div class="basicInfo">
+            <p>基本资料</p>
+            <ul>
+                <li class="clear"><em>年龄</em><span>{{babyInfo.age}}</span></li>
+                <li class="clear"><em>身高</em><span>{{babyInfo.height}}</span></li>
+                <li class="clear"><em>体重</em><span>{{babyInfo.weight}}</span></li>
+                <li class="clear"><em>三围</em><span>{{babyInfo.bwh}}</span></li>
+                <li class="clear"><em>星座</em><span>{{babyInfo.sign}}</span></li>
+                <li class="clear"><em>籍贯</em><span>{{babyInfo.origo}}</span></li>
+                <li class="clear"><em>民族</em><span>{{babyInfo.nation}}</span></li>
+            </ul>
+        </div>
+        <div class="moreInfo">
+            <p>更多资料</p>
+            <ul>
+                <li class="clear"><em>类型</em><span>{{babyInfo.selfRate}}</span></li>
+                <li class="clear"><em>魅力</em><span>{{babyInfo.charm}}</span></li>
+                <li class="clear"><em>脸型</em><span>{{babyInfo.face}}</span></li>
+                <li class="clear"><em>体型</em><span>{{babyInfo.shape}}</span></li>
+                <li class="clear"><em>发型</em><span>{{babyInfo.haird}}</span></li>
+                <li class="clear"><em>血型</em><span>{{babyInfo.blood}}</span></li>
+            </ul>
+        </div> -->
+        <a href="javascript:void(0)" class="yueBtn" ng-class=" haveYue ? 'noyueBtn' : 'yueBtn'" ng-click="tiaozhuan()">预约</a>
+        <div class="layer-msg" ng-show="isShow">{{content}}</div>
+    </div>
+
+
+    <script type="text/javascript" src="../libs/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="../libs/swiper.js"></script>
+    <script src="../js/app.js"></script>
+    <script type="text/javascript" src="../js/details.js"></script>
+
+</body>
+</html>

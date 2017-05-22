@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="searchApp">
+<head>
+    <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name = "format-detection" content = "telephone=no">
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'  'unsafe-inline'; style-src 'self' 'unsafe-inline';"/>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/swiper.min.css">
+    <title>搜索</title>
+    <script>
+        var s = document.documentElement.clientWidth;
+        document.documentElement.style.fontSize = s/25+ "px";
+    </script>
+    <script src="../libs/angular.min.js"></script>
+
+</head>
+<body ng-cloak ng-controller="searchLimitCtr">
+<div class="head"  ng-show="isShow">
+    <!--<a href="javascript:;" ng-click="return()"><img src="../images/arrow.png"/></a>-->
+    <div>
+        <input type="text" placeholder="搜索" ng-model="search" ng-change="beginSearch()" ng-focus="begin()"/>
+        <div class="search icon" ng-show="iconShow"></div>
+    </div>
+</div>
+
+<ul class="adressList" id="adressList">
+    <li ng-repeat="address in addressList" ng-click="detail(address)">{{address}}</li>
+</ul>
+
+<script src="../js/app.js"></script>
+<script src="../libs/jquery-1.10.1.min.js"></script>
+<script src="../js/search.js"></script>
+</body>
+</html>

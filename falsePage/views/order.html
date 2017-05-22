@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="orderApp">
+<head>
+    <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'  'unsafe-inline'; style-src 'self' 'unsafe-inline';"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name = "format-detection" content = "telephone=no">
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'  'unsafe-inline'; style-src 'self' 'unsafe-inline';"/>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/layer.css">
+    <title>包厢</title>
+    <script>
+        var s = document.documentElement.clientWidth;
+        document.documentElement.style.fontSize = s/25+ "px";
+    </script>
+    <script src="../libs/angular.min.js"></script>
+</head>
+<body ng-controller="orderCtr" ng-cloak>
+
+<div class="loading" ng-show="loadShow"><img src="../images/loading.gif"/></div>
+
+<!--购物车中有妹子情况-->
+<div class="container" ng-show="hasMei">
+    <div class="orderInfo clear">
+        <p>订单消息：</p>
+        <ul class="clear">
+            <li class="clear"><span>联系电话：</span><input type="text" placeholder="请填写您真实的电话" maxlength="11" ng-model="phone" ng-readonly="true"></li>
+            <li class="clear"><span>昵<em>空空</em>称：</span><input type="text" placeholder="请填写昵称" ng-model="name" ng-readonly="true"></li>
+            <li class="clear"><span>时<em>空空</em>间：</span><input type="text" placeholder="请填写见面时间" id="timeMeeting"  ng-model="time" ng-readonly="true" ng-disabled="hasOrder">
+                <p>*只能选择2小时之后的时间</p></li>
+            <li class="clear"><span>地<em>空空</em>址：</span><input type="text"  placeholder="请填写真实可用的见面地址" ng-model="address" ng-readonly="true" ng-focus="addressChoose()" ng-disabled="can"/>
+        </ul>
+    </div>
+
+    <div class="chosenBaby" ng-show="babyShow">
+        <p>已选择</p>
+    </div>
+    <ul class="invitars" id="invitars" >
+        <li class="clear" ng-repeat="(index,baby) in babyList" on-finish="ngRepeatFinished">
+            <div class="person">
+                <img ng-src="{{baby.babyPhoto}}">
+            </div>
+            <div class="intro">
+                <p>{{baby.babyName}}</p>
+                <div class="tags myclear">
+                    <span ng-repeat="item in scaleArray[index]">
+                        <img src="../images/star.png"/>
+                        <em>{{item}}</em>
+                    </span>
+                </div>
+            </div>
+            <div class="price1">￥{{baby.payMoney}}/课时</div>
+            <div class="deleteHide" ng-click="deleteBaby(baby)">
+                <p>删除</p>
+            </div>
+        </li>
+    </ul>
+
+    <!--底部-->
+    <div class="bottom clear">
+        <p class="total">合计：<span>￥{{count}}</span></p>
+        <a class="count" href="javascript:;" ng-click="goCount()">去预约({{totalNum}})</a>
+    </div>
+
+    <div class="mask" id="mask1" ng-show="isShow">
+        <div class="tip">
+            <p>{{content}}</p>
+            <a href="javascript:;" ng-click="know()">我知道了</a>
+        </div>
+    </div>
+    
+ 	<div class="layer-msg" ng-show="tipShow">{{contentTip}}</div>
+</div>
+
+<!--购物车中没有妹子情况-->
+<div class="chooseNoContainer" ng-show="noMei">
+    <img src="../images/img.png"/>
+    <p class="tip">{{orderInfo}}</p>
+</div>
+<script src="../js/app.js"></script>
+<script src="../js/order.js"></script>
+<script src="../libs/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="../libs/datePicker.js"></script>
+</body>
+</html>
