@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="roomChooseApp">
+<head>
+    <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name = "format-detection" content = "telephone=no">
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/layer.css">
+    <title>选择包厢</title>
+    <script>
+        var s = document.documentElement.clientWidth;
+        document.documentElement.style.fontSize = s/25+ "px";
+    </script>
+    <script src="../libs/angular.min.js"></script>
+</head>
+<body ng-controller="roomChooseCtr" ng-cloak>
+    <div class="choseWrap">
+        <ul class="chooseContent clear">
+            <li class="clear" ng-repeat="room in roomList" ng-click="roomInfo(room)"><em>{{room.spec}}</em><span>RMB：{{room.price}}</span><input type="radio" name="sex" value="X" class="radio"><i></i><label class="radio">预约</label></li>
+        </ul>
+
+        <div class="orderInfo roomChosenInfo clear">
+            <ul class="clear">
+                <li class="clear"><span>联系电话：</span><input type="text" placeholder="请填写您真实的电话" maxlength="11" ng-model="phone" ng-readonly="true"></li>
+                <li class="clear"><span>昵<em>空空</em>称：</span><input type="text" placeholder="修改昵称" ng-model="name" ng-readonly="true"></li>
+                <li class="clear"><span>时<em>空空</em>间：</span><input type="text" placeholder="请填写见面时间" id="time" ng-model="time" ng-readonly="true">
+                    <p>*只能选择2小时之后的时间</p></li>
+            </ul>
+        </div>
+        <a href="javascript:;" class="confirm" id="confirm" ng-click="sure()">确定</a>
+    </div>
+
+    <!--弹窗-->
+    <div class="layer-msg roomLayer" ng-show="contentShow">{{content}}</div>
+
+    <script src="../js/app.js"></script>
+    <script src="../libs/jquery-1.10.1.min.js"></script>
+    <script src="../libs/datePicker.js"></script>
+    <script src="../js/roomChoose.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="orderApp">
+<head>
+    <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name = "format-detection" content = "telephone=no">
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'  'unsafe-inline'; style-src 'self' 'unsafe-inline';"/>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/layer.css">
+    <title>包厢</title>
+	<script>
+        var s = document.documentElement.clientWidth;
+        document.documentElement.style.fontSize = s/25+ "px";
+    </script>
+    <script src="../libs/angular.min.js"></script>
+</head>
+<body ng-controller="orderCtr" ng-cloak>
+    
+<div class="loading" ng-show="loadShow">
+    <img src="../images/loading.gif"/>
+</div>    
+    
+    
+<!--购物车中有妹子情况-->
+<div class="container" ng-show="hasMei">
+    <!--<p class="head">包厢</p>-->
+    <div class="part1 clear" ng-show="isShow1">
+        <p>*如需预定包厢，订单消息可不填。如已自己订好包厢，请输入真实消息，因虚假信息造成订单失败，不予退款。</p>
+        <a class="orderBtn" ng-click="order()" >预订包厢</a>
+    </div>
+
+    <div class="orderInfo clear">
+        <p>订单消息：</p>
+        <ul class="clear">
+            <li class="clear"><span>联系电话：</span><input type="text" placeholder="请填写您真实的电话" maxlength="11" ng-model="phone" ng-readonly="true"></li>
+            <li class="clear"><span>昵<em>空空</em>称：</span><input type="text" placeholder="请填写昵称" ng-model="name" ng-readonly="true"></li>
+            <li class="clear"><span>时<em>空空</em>间：</span><input type="text" placeholder="请填写见面时间" id="timeMeeting" ng-model="time" ng-readonly="true" ng-disabled="hasOrder">
+                <p>*只能选择2小时之后的时间</p></li>
+            <li class="clear"><span>地<em>空空</em>址：</span><input type="text"  placeholder="请填写真实可用的见面地址" ng-model="address" ng-focus="addressChoose()" ng-disabled="can"  ng-readonly="true"/><input class="num" type="text" placeholder="请填写具体的包厢号" ng-model="number" ng-change="store()" ng-disabled="can"/></li>
+        </ul>
+        <a class="cancelBtn" ng-click="cancel()" ng-show="isShow2">取消包厢</a>
+        <a class="moreBtn"  href="javascript:;" ng-show="moreBaby" ng-click="invitedChoose()">更多宝贝</a>
+        <a class="addBaby"  ng-click="invitedChoose()" ng-show="addBaby">添加宝贝</a>
+    </div>
+
+    <div class="chosenBaby" ng-show="babyShow">
+        <p>已选择宝贝：</p>
+    </div>
+    <ul class="invitars" id="invitars" >
+        <li class="clear" ng-repeat="(index,baby) in babyList" on-finish="ngRepeatFinished">
+            <div class="person">
+                <img ng-src="{{baby.babyPhoto}}">
+            </div>
+            <div class="intro">
+                <p>{{baby.babyName}}</p>
+                <div class="tags myclear">
+                    <span ng-repeat="item in scaleArray[index]">
+                        <img src="../images/star.png"/>
+                        <em>{{item}}</em>
+                    </span>
+                </div>
+            </div>
+            <div class="price1">￥{{baby.payMoney}}/场次</div>
+            <div class="deleteHide" ng-click="deleteBaby(baby)">
+                <p>删除</p>
+            </div>
+        </li>
+    </ul>
+
+    <div class="chosenBaby" ng-show="inviteShow">
+        <p>邀请名单：</p>
+    </div>
+    <ul class="inviteList">
+        <li ng-repeat="(index,item) in invitedDetailList" on-finish="ngRepeatFinished">
+            <p class="clear"><span>{{item.beInviteName}}</span><em>{{item.beInvitePhone}}</em><strong>￥<b>0</b>/场次</strong></p>
+            <div class="priceChoose">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <div class="green"></div>
+                <div class="dot"></div>
+            </div>
+            <div class="text clear">
+                <span>￥0</span>
+                <span>￥800</span>
+                <span>￥1000</span>
+                <span>￥1200</span>
+                <span>￥1500</span>
+            </div>
+            <a href="javascript:;" class="delete"  ng-click="deleteInnvited(index)">
+            <img src="../images/delete.png"/>
+            </a>
+        </li>
+    </ul>
+    <!--底部-->
+    <div class="bottom clear">
+        <a href="javascript:;" class="toInvite clear" ng-click="goInvite()" ng-show="canInvite">
+            <img src="../images/people.png"/>
+            <span>去请客</span>
+        </a>
+        <p class="total">合计：<span>￥{{count}}</span></p>
+        <a class="count" href="javascript:;" ng-click="goCount()">去结算({{totalNum}})</a>
+    </div>
+    <div class="mask" id="mask1" ng-show="isShow">
+        <div class="tip">
+            <p>{{content}}</p>
+            <a href="javascript:;" ng-click="know()">我知道了</a>
+        </div>
+    </div>
+    
+     <div class="layer-msg" ng-show="tipShow">{{contentTip}}</div>
+    
+</div>
+
+<!--购物车中没有妹子情况-->
+<div class="chooseNoContainer" ng-show="noMei">
+    <img src="../images/img.png"/>
+    <p class="tip">您现在还没有包厢</p>
+    <a class="toYu" ng-click="toYu()">预定包厢</a>
+    <ul class="tipList">
+        <li>注意事项：</li>
+        <li>1.对宝贝下单一定要有真实可用的包厢。</li>
+        <li>2.包厢可用您自己准备，也可以通过我们预定。</li>
+        <li>3.如果您自己有准备包厢，请直接去下单，宝贝们在等着您。</li>
+    </ul>
+</div>
+
+<!--被请客的情况-->
+<div class="container" ng-show="beInvited">
+    <div class="orderInfo clear">
+        <ul class="clear">
+            <li class="clear"><span>联系电话：</span><input type="text" placeholder="请填写您真实的电话" maxlength="11" ng-model="phone" ng-readonly="true"></li>
+            <li class="clear"><span>昵<em>空空</em>称：</span><input type="text" placeholder="请填写昵称" ng-model="name" ng-readonly="true"></li>
+            <li class="clear"><span>时<em>空空</em>间：</span><input type="text" placeholder="请填写见面时间" id="timeMeeting"
+                                                                ng-model="time" ng-readonly="true" ng-disabled="hasOrder">
+                <p>*只能选择2小时之后的时间</p></li>
+            <li class="clear"><span>地<em>空空</em>址：</span><input type="text"  placeholder="请填写真实可用的见面地址" ng-model="address" ng-focus="addressFirst()" ng-disabled="can"/><input class="num" type="text" placeholder="请填写具体的包厢号" ng-model="number" ng-change="store()" ng-disabled="can"/></li>
+        </ul>
+        <a class="addBaby" ng-click="invitedChoose()">添加宝贝</a>
+        <p class="inviteTip">您的好友{{inviteName}}请客，好友已支付{{inviteMoney}}RMB，快去添加宝贝吧。</p>
+        <ul  class="warning">
+            <li>注意</li>
+            <li>好友支付金额有限，消费金额超出部分还需您自行支付</li>
+            <li>消费金额不足时，余额将自动返还给付款好友。</li>
+        </ul>
+    </div>
+</div>
+
+
+<!--追加订单没有妹子的情况-->
+<!--<div class="container" ng-show="zhuiNoMei">-->
+    <!--<div class="orderInfo clear">-->
+        <!--<ul class="clear">-->
+            <!--<li class="clear"><span>联系电话：</span><input type="text" placeholder="请填写您真实的电话" maxlength="11" ng-model="phone" ng-readonly="true"></li>-->
+            <!--<li class="clear"><span>昵<em>空空</em>称：</span><input type="text" placeholder="请填写昵称" ng-model="name" ng-readonly="true"></li>-->
+            <!--<li class="clear"><span>时<em>空空</em>间：</span><input type="text" placeholder="请填写见面时间" id="timeMeeting" ng-model="time" ng-readonly="true" ng-disabled="readOnly">-->
+                <!--<p>*只能选择2小时之后的时间</p></li>-->
+            <!--<li class="clear"><span>地<em>空空</em>址：</span><input type="text"  placeholder="请填写真实可用的见面地址" ng-model="address" ng-focus="addressFirst()" ng-disabled="can"/><input class="num" type="text" placeholder="请填写具体的包厢号" ng-model="number" ng-change="store()" ng-disabled="can"/></li>-->
+        <!--</ul>-->
+        <!--<a class="addBaby"  ng-click="invitedChoose()">添加宝贝</a>-->
+    <!--</div>-->
+    <!---->
+
+    <!--&lt;!&ndash;底部&ndash;&gt;-->
+    <!--<div class="bottom clear">-->
+        <!--<a href="javascript:;" class="toInvite clear" ng-click="goInvite()" ng-show="canInvite">-->
+            <!--<img src="../images/people.png"/>-->
+            <!--<span>去请客</span>-->
+        <!--</a>-->
+        <!--<p class="total">合计：<span>￥{{count}}</span></p>-->
+        <!--<a class="count" href="javascript:;" ng-click="goCount()">去结算({{totalNum}})</a>-->
+    <!--</div>-->
+    <!---->
+    <!---->
+
+    <!--<div class="mask" id="mask1" ng-show="isShow">-->
+        <!--<div class="tip">-->
+            <!--<p>{{content}}</p>-->
+            <!--<a href="javascript:;" ng-click="know()">我知道了</a>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<script src="../js/app.js"></script>
+<script src="../js/order.js"></script>
+<script src="../libs/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="../libs/datePicker.js"></script>
+</body>
+</html>
