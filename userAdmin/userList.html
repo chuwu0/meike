@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>宝贝列表</title>
+		<link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all" />
+	</head>
+
+	<body>
+    <blockquote class="layui-elem-quote">宝贝列表</blockquote>
+    <table class="layui-table" >
+      <colgroup>
+        <col width="">
+        <col width="">
+        <col width="">
+      </colgroup>
+      <thead>
+        <tr>
+          <th style="text-align:center;">序号</th>
+          <th style="text-align:center;">昵称</th>
+          <th style="text-align:center;">手机号</th>
+          <th style="text-align:center;">注册时间</th>
+          <th style="text-align:center;">余额</th>
+          <th style="text-align:center;">订单数</th>
+          <th style="text-align:center;">被举报次数</th>
+          <th style="text-align:center;">操作</th>
+        </tr>
+      </thead>
+      <tbody style="text-align:center;">
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>123434234223</td>
+          <td>1017-06-27 07:12:54</td>
+          <td>0.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td><button type="button" class="layui-btn layui-btn-danger" name="button">删除</button></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>123434234223</td>
+          <td>1017-06-27 07:12:54</td>
+          <td>0.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td><button type="button" class="layui-btn layui-btn-danger" name="button">删除</button></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>123434234223</td>
+          <td>1017-06-27 07:12:54</td>
+          <td>0.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td><button type="button" class="layui-btn layui-btn-danger" name="button">删除</button></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>123434234223</td>
+          <td>1017-06-27 07:12:54</td>
+          <td>0.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td><button type="button" class="layui-btn layui-btn-danger" name="button">删除</button></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>123434234223</td>
+          <td>1017-06-27 07:12:54</td>
+          <td>0.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td><button type="button" class="layui-btn layui-btn-danger" name="button">删除</button></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>123434234223</td>
+          <td>1017-06-27 07:12:54</td>
+          <td>0.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td><button type="button" class="layui-btn layui-btn-danger" name="button">删除</button></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>123434234223</td>
+          <td>1017-06-27 07:12:54</td>
+          <td>0.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td><button type="button" class="layui-btn layui-btn-danger" name="button">删除</button></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>123434234223</td>
+          <td>1017-06-27 07:12:54</td>
+          <td>0.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td><button type="button" class="layui-btn layui-btn-danger" name="button">删除</button></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>123434234223</td>
+          <td>1017-06-27 07:12:54</td>
+          <td>0.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td><button type="button" class="layui-btn layui-btn-danger" name="button">删除</button></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>123434234223</td>
+          <td>1017-06-27 07:12:54</td>
+          <td>0.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td><button type="button" class="layui-btn layui-btn-danger" name="button">删除</button></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>123434234223</td>
+          <td>1017-06-27 07:12:54</td>
+          <td>0.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td><button type="button" class="layui-btn layui-btn-danger" name="button">删除</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="page" style="text-align:center;"></div>
+	</body>
+  <script type="text/javascript" src="../plugins/layui/layui.js"></script>
+  <script type="text/javascript">
+    layui.use(['form', 'layedit', 'laydate', 'laypage'], function() {
+      var form = layui.form(),
+        layer = layui.layer,
+        layedit = layui.layedit,
+        $ = layui.jquery,
+        laypage = layui.laypage,
+        laydate = layui.laydate;
+
+        console.log($);
+
+        laypage({
+          cont: 'page'
+          ,pages: 100
+          ,skip: true
+        });
+
+        $('button').on('click',function(){
+          console.log($(this));
+          layer.confirm('您确认删除吗？', {
+            btn: ['确认','取消'] //按钮
+          }, function(){
+            layer.msg('删除成功', {icon: 1});
+          }, function(){
+          });
+        })
+    });
+  </script>
+
+</html>

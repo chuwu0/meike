@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>用户充值记录</title>
+		<link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all" />
+	</head>
+
+	<body>
+    <blockquote class="layui-elem-quote">用户充值记录</blockquote>
+    <table class="layui-table" >
+      <colgroup>
+        <col width="">
+        <col width="">
+        <col width="">
+      </colgroup>
+      <thead>
+        <tr>
+          <th style="text-align:center;">序号</th>
+          <th style="text-align:center;">昵称</th>
+          <th style="text-align:center;">充值方式</th>
+          <th style="text-align:center;">充值金额</th>
+          <th style="text-align:center;">优惠金额</th>
+          <th style="text-align:center;">充值总金额</th>
+          <th style="text-align:center;">充值时间</th>
+        </tr>
+      </thead>
+      <tbody style="text-align:center;">
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>支付宝</td>
+          <td>0.5</td>
+          <td>500.00</td>
+          <td>300.00</td>
+          <td>1017-06-27 07:12:54</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>支付宝</td>
+          <td>0.5</td>
+          <td>500.00</td>
+          <td>300.00</td>
+          <td>1017-06-27 07:12:54</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>支付宝</td>
+          <td>0.5</td>
+          <td>500.00</td>
+          <td>300.00</td>
+          <td>1017-06-27 07:12:54</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>支付宝</td>
+          <td>0.5</td>
+          <td>500.00</td>
+          <td>300.00</td>
+          <td>1017-06-27 07:12:54</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>支付宝</td>
+          <td>0.5</td>
+          <td>500.00</td>
+          <td>300.00</td>
+          <td>1017-06-27 07:12:54</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>支付宝</td>
+          <td>0.5</td>
+          <td>500.00</td>
+          <td>300.00</td>
+          <td>1017-06-27 07:12:54</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>支付宝</td>
+          <td>0.5</td>
+          <td>500.00</td>
+          <td>300.00</td>
+          <td>1017-06-27 07:12:54</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>支付宝</td>
+          <td>0.5</td>
+          <td>500.00</td>
+          <td>300.00</td>
+          <td>1017-06-27 07:12:54</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>支付宝</td>
+          <td>0.5</td>
+          <td>500.00</td>
+          <td>300.00</td>
+          <td>1017-06-27 07:12:54</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>默认昵称</td>
+          <td>支付宝</td>
+          <td>0.5</td>
+          <td>500.00</td>
+          <td>300.00</td>
+          <td>1017-06-27 07:12:54</td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="page" style="text-align:center;"></div>
+	</body>
+  <script type="text/javascript" src="../plugins/layui/layui.js"></script>
+  <script type="text/javascript">
+    layui.use(['form', 'layedit', 'laydate', 'laypage'], function() {
+      var form = layui.form(),
+        layer = layui.layer,
+        layedit = layui.layedit,
+        $ = layui.jquery,
+        laypage = layui.laypage,
+        laydate = layui.laydate;
+
+        laypage({
+          cont: 'page'
+          ,pages: 100
+          ,skip: true
+        });
+    });
+  </script>
+
+</html>
