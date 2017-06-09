@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>创建角色</title>
+		<link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+	</head>
+
+	<body>
+    <blockquote class="layui-elem-quote">创建角色</blockquote>
+    <div class="form_create">
+      <form class="layui-form" action="index.html" method="post">
+        <div class="layui-form-item">
+          <label class="layui-form-label">角色名称：</label>
+          <div class="layui-input-block" style="width:40%;">
+            <input type="text" name="title" required lay-verify="required" placeholder="请输入角色名称" autocomplete="off" class="layui-input" value="">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">角色code：</label>
+          <div class="layui-input-block" style="width:40%;">
+            <input type="text" name="title" required lay-verify="required" placeholder="请输入角色名称" autocomplete="off" class="layui-input" value="">
+          </div>
+        </div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">权限管理：</label>
+					<div class="user-admin">
+						<div class="layui-input-block">
+							<input type="checkbox" name="like[write]" title="用户管理">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="用户列表" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="用户充值记录" lay-skin="primary">
+						</div>
+					</div>
+					<div class="baby-admin">
+						<div class="layui-input-block">
+							<input type="checkbox" name="like[write]" title="宝贝管理">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="宝贝列表" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="添加宝贝" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="宝贝审核" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="服务日志" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="宝贝状态管理" lay-skin="primary">
+						</div>
+					</div>
+					<div class="order-admin">
+						<div class="layui-input-block">
+							<input type="checkbox" name="like[write]" title="订单管理">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="订单列表" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="进行中订单" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="紧急订单" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="预定包厢" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="退款申请" lay-skin="primary">
+						</div>
+					</div>
+					<div class="else-admin">
+						<div class="layui-input-block">
+							<input type="checkbox" name="like[write]" title="其他管理">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="等级管理" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="服务范围管理" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="Banner管理" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="服务场所管理" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="约会地址管理管理" lay-skin="primary">
+						</div>
+					</div>
+					<div class="wtf-admin">
+						<div class="layui-input-block">
+							<input type="checkbox" name="like[write]" title="提现管理">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="提现申请" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="提现记录" lay-skin="primary">
+						</div>
+					</div>
+					<div class="code-admin">
+						<div class="layui-input-block">
+							<input type="checkbox" name="like[write]" title="邀请码管理">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="下线管理" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="邀请码管理" lay-skin="primary">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="邀请码返利" lay-skin="primary">
+						</div>
+					</div>
+					<div class="system-util">
+						<div class="layui-input-block">
+							<input type="checkbox" name="like[write]" title="系统工具">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="短信工具" lay-skin="primary">
+						</div>
+					</div>
+					<div class="app-admin">
+						<div class="layui-input-block">
+							<input type="checkbox" name="like[write]" title="用户App管理">
+						</div>
+						<div class="layui-input-block">
+							<input type="checkbox" name="" title="首页管理" lay-skin="primary">
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					</div>
+				</div>
+      </form>
+    </div>
+	</body>
+	<script type="text/javascript" src="../plugins/layui/layui.js"></script>
+	<script>
+		layui.use(['form', 'layedit', 'laydate'], function() {
+			var form = layui.form(),
+				layer = layui.layer,
+				layedit = layui.layedit,
+				laydate = layui.laydate;
+
+			//创建一个编辑器
+			var editIndex = layedit.build('LAY_demo_editor');
+		});
+	</script>
+</html>

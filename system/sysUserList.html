@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>City</title>
+		<link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all" />
+	</head>
+
+	<body>
+    <blockquote class="layui-elem-quote">系统用户列表</blockquote>
+    <table class="layui-table" >
+      <colgroup>
+        <col width="">
+        <col width="">
+        <col width="">
+      </colgroup>
+      <thead>
+        <tr>
+          <th style="text-align:center;">序号</th>
+          <th style="text-align:center;">用户名</th>
+          <th style="text-align:center;">昵称</th>
+          <th style="text-align:center;">创建时间</th>
+        </tr>
+      </thead>
+      <tbody style="text-align:center;">
+        <tr>
+          <td>数据</td>
+          <td>数据</td>
+          <td>数据</td>
+          <td>数据</td>
+        </tr>
+        <tr>
+          <td>数据</td>
+          <td>数据</td>
+          <td>数据</td>
+          <td>数据</td>
+        </tr>
+        <tr>
+          <td>数据</td>
+          <td>数据</td>
+          <td>数据</td>
+          <td>数据</td>
+        </tr>
+        <tr>
+          <td>数据</td>
+          <td>数据</td>
+          <td>数据</td>
+          <td>数据</td>
+        </tr>
+        <tr>
+          <td>数据</td>
+          <td>数据</td>
+          <td>数据</td>
+          <td>数据</td>
+        </tr>
+        <tr>
+          <td>数据</td>
+          <td>数据</td>
+          <td>数据</td>
+          <td>数据</td>
+        </tr>
+      </tbody>
+    </table>
+		<div id="page" style="text-align:center;"></div>
+	</body>
+	<script type="text/javascript" src="../plugins/layui/layui.js"></script>
+  <script type="text/javascript">
+    layui.use(['form', 'layedit', 'laydate', 'laypage'], function() {
+      var form = layui.form(),
+        layer = layui.layer,
+        layedit = layui.layedit,
+        $ = layui.jquery,
+        laypage = layui.laypage,
+        laydate = layui.laydate;
+
+        laypage({
+          cont: 'page'
+          ,pages: 100
+          ,skip: true
+        });
+    });
+		</script>
+</html>
