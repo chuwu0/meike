@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加宝贝</title>
+		<link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+	</head>
+
+	<body>
+    <blockquote class="layui-elem-quote">添加宝贝</blockquote>
+    <div class="form_create">
+      <form class="layui-form" action="index.html" method="post">
+        <div class="layui-form-item">
+          <label class="layui-form-label">手机号码：</label>
+          <div class="layui-input-inline">
+            <input type="tel" name="phone" lay-verify="phone" autocomplete="off" class="layui-input">
+          </div>
+          <div class="layui-form-mid layui-word-aux">辅助文字</div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">宝贝昵称：</label>
+          <div class="layui-input-inline">
+            <input type="text" name="title" required lay-verify="required" placeholder="请输入宝贝昵称" autocomplete="off" class="layui-input" value="">
+          </div>
+          <div class="layui-form-mid layui-word-aux">辅助文字</div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">生日：</label>
+          <div class="layui-input-inline">
+            <input class="layui-input" placeholder="生日" onclick="layui.laydate({elem: this, festival: true})">
+          </div>
+        </div>
+        <div class="layui-form-item">
+					<label class="layui-form-label">选择地区</label>
+          <div class="layui-input-inline">
+              <select name="province" lay-filter="province">
+                  <option value="">请选择省</option>
+              </select>
+          </div>
+          <div class="layui-input-inline" style="display: none;">
+              <select name="city" lay-filter="city">
+                  <option value="">请选择市</option>
+              </select>
+          </div>
+        </div>
+      </form>
+    </div>
+	</body>
+	<script type="text/javascript" src="../plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="../js/area.js"></script>
+	<script>
+			//初始数据
+			var areaData = Area;
+
+			var $form;
+			var form;
+			var $;
+			layui.use(['jquery', 'form'], function() {
+				$ = layui.jquery;
+				form = layui.form();
+				$form = $('form');
+				loadProvince();
+			});
+
+			function loadProvince() {
+				var proHtml = '';
+				for(var i = 0; i < areaData.length; i++) {
+					proHtml += '<option value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' +
+						areaData[i].provinceName + '</option>';
+				}
+				//初始化省数据
+				$form.find('select[name=province]').append(proHtml);
+				form.render();
+				form.on('select(province)', function(data) {
+					$form.find('select[name=area]').html('<option value="">请选择县/区</option>').parent().hide();
+					var value = data.value;
+					var d = value.split('_');
+					var code = d[0];
+					var count = d[1];
+					var index = d[2];
+					if(count > 0) {
+						loadCity(areaData[index].mallCityList);
+					} else {
+						$form.find('select[name=city]').parent().hide();
+					}
+				});
+			}
+
+			function loadCity(citys) {
+				var cityHtml = '';
+				for(var i = 0; i < citys.length; i++) {
+					cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallAreaList.length + '_' + i + '">' +
+						citys[i].cityName + '</option>';
+				}
+				$form.find('select[name=city]').html(cityHtml).parent().show();
+				form.render();
+				form.on('select(city)', function(data) {
+					var value = data.value;
+					var d = value.split('_');
+					var code = d[0];
+					var count = d[1];
+					var index = d[2];
+					if(count > 0) {
+					} else {
+						$form.find('select[name=area]').parent().hide();
+					}
+				});
+			}
+
+	</script>
+</html>
