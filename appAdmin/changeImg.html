@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>标题</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+ <link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css"> 
+</head>
+<body>
+
+	<blockquote class="layui-elem-quote">
+		<span class="layui-breadcrumb" lay-separator=">>">
+			  <a><cite>当前位置：</cite></a>
+			  <a href="">app管理</a>
+			  <a href="">首页管理</a>
+			  <a href="">首页编辑</a>
+		</span>	
+	</blockquote>
+	<blockquote class="layui-elem-quote">
+			  <a><cite>首页编辑</cite></a>
+			  <a href="homeAdmin.html" style="float:right;">返回</a>
+	</blockquote>
+	<form class="layui-form" action="">
+	  <div class="layui-form-item">
+		    <label class="layui-form-label">标题</label>
+		    <div class="layui-input-block">
+		      <select name="interest" lay-filter="aihao">
+		        <option value=""></option>
+		        <option value="0">宝贝列表</option>	
+		        <option value="1" selected="">榜单列表</option>
+		      </select>
+		    </div>
+		  </div>
+  </form>
+  <div>
+  	选择文件：<input type="file" name="file" class="layui-upload-file"> 
+  </div>
+  <button class="layui-btn">提交</button>
+	<script type="text/javascript" src="../plugins/layui/layui.js"></script>
+	<script>
+		layui.use(['element','form','upload'], function(){
+		  var element = layui.element(); //导航的hover效果、二级菜单等功能，需要依赖element模块
+		   var form = layui.form()
+		  ,layer = layui.layer
+		  ,layedit = layui.layedit
+		  ,laydate = layui.laydate;
+		  //监听导航点击
+		  element.on('nav(demo)', function(elem){
+		    //console.log(elem)
+		    layer.msg(elem.text());
+		  });
+		    layui.upload({
+			    url: '' //上传接口
+			    ,success: function(res){ //上传成功后的回调
+			      console.log(res)
+			    }
+			  });
+			  
+			  layui.upload({
+			    url: '/test/upload.json'
+			    ,elem: '#test' //指定原始元素，默认直接查找class="layui-upload-file"
+			    ,method: 'get' //上传接口的http类型
+			    ,success: function(res){
+			      LAY_demo_upload.src = res.url;
+			    }
+			  });	
+		});
+</script>
+</body>
+</html>
