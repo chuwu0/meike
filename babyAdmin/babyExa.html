@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>宝贝审核</title>
+		<link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all" />
+    <style media="screen">
+      .warting-baby{
+        float: right;
+        margin-right: 10%;
+      }
+    </style>
+	</head>
+
+	<body>
+    <blockquote class="layui-elem-quote">宝贝审核<div class="warting-baby">待审核宝贝：<span></span></div></blockquote>
+    <table class="layui-table" >
+      <colgroup>
+        <col width="">
+        <col width="">
+        <col width="">
+      </colgroup>
+      <thead>
+        <tr>
+          <th style="text-align:center;">序号</th>
+          <th style="text-align:center;">注册手机</th>
+          <th style="text-align:center;">宝贝昵称</th>
+          <th style="text-align:center;">服务范围</th>
+          <th style="text-align:center;">服务场所</th>
+          <th style="text-align:center;">提交人</th>
+          <th style="text-align:center;">注册时间</th>
+          <th style="text-align:center;">操作</th>
+        </tr>
+      </thead>
+      <tbody style="text-align:center;">
+        <tr>
+          <td>1</td>
+          <td>123434234223</td>
+          <td>默认昵称</td>
+          <td>KTV</td>
+          <td>KTV</td>
+          <td>提交人</td>
+          <td>2017-06-27 09:12:54</td>
+          <td><button type="button" class="layui-btn layui-btn deal-exa" name="button">审核</button></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>123434234223</td>
+          <td>默认昵称</td>
+          <td>KTV</td>
+          <td>KTV</td>
+          <td>提交人</td>
+          <td>2017-06-27 09:12:54</td>
+          <td><button type="button" class="layui-btn layui-btn deal-exa" name="button">审核</button></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>123434234223</td>
+          <td>默认昵称</td>
+          <td>KTV</td>
+          <td>KTV</td>
+          <td>提交人</td>
+          <td>2017-06-27 09:12:54</td>
+          <td><button type="button" class="layui-btn layui-btn deal-exa" name="button">审核</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="page" style="text-align:center;"></div>
+	</body>
+  <script type="text/javascript" src="../plugins/layui/layui.js"></script>
+  <script type="text/javascript">
+    layui.use(['form', 'layedit', 'laydate', 'laypage'], function() {
+      var form = layui.form(),
+        layer = layui.layer,
+        layedit = layui.layedit,
+        $ = layui.jquery,
+        laypage = layui.laypage,
+        laydate = layui.laydate;
+
+        console.log($);
+
+        laypage({
+          cont: 'page'
+          ,pages: 100
+          ,skip: true
+        });
+        $('.deal-exa').on('click',function(){
+					location.href="babyDetails.html"
+				})
+        wartingBaby(1);
+
+        function wartingBaby(val){
+          $('.warting-baby span').html(val);
+        }
+    });
+  </script>
+
+</html>
