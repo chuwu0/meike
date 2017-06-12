@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>用户列表</title>
+		<link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all" />
+	</head>
+
+	<body>
+    <blockquote class="layui-elem-quote">用户列表</blockquote>
+    <table class="layui-table" >
+      <colgroup>
+        <col width="">
+        <col width="">
+        <col width="">
+      </colgroup>
+      <thead>
+        <tr>
+          <th style="text-align:center;">序号</th>
+          <th style="text-align:center;">手机号码</th>
+          <th style="text-align:center;">昵称</th>
+          <th style="text-align:center;">等级名称</th>
+          <th style="text-align:center;">身高</th>
+          <th style="text-align:center;">体重</th>
+          <th style="text-align:center;">提交人</th>
+          <th style="text-align:center;">注册时间</th>
+          <th style="text-align:center;">审核时间</th>
+          <th style="text-align:center;">服务状态</th>
+          <th style="text-align:center;">详情</th>
+        </tr>
+      </thead>
+      <tbody style="text-align:center;">
+        <tr>
+          <td>1</td>
+          <td>123434234223</td>
+          <td>默认昵称</td>
+          <td>等级一</td>
+          <td>176cm</td>
+          <td>49kg</td>
+          <td>49kg</td>
+          <td>2017-06-27 07:12:54</td>
+          <td>2017-06-27 09:12:54</td>
+          <td>关闭</td>
+          <td><button type="button" class="layui-btn layui-btn go-deal" name="button">明细</button> <button type="button" class="layui-btn layui-btn deal-this" name="button">编辑</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="page" style="text-align:center;"></div>
+	</body>
+  <script type="text/javascript" src="../plugins/layui/layui.js"></script>
+  <script type="text/javascript">
+    layui.use(['form', 'layedit', 'laydate', 'laypage'], function() {
+      var form = layui.form(),
+        layer = layui.layer,
+        layedit = layui.layedit,
+        $ = layui.jquery,
+        laypage = layui.laypage,
+        laydate = layui.laydate;
+        })
+    });
+  </script>
+
+</html>
