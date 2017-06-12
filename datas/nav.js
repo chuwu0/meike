@@ -162,6 +162,10 @@ var navs = [
 		"children": [{
 			"title": "首页管理",
 			"icon": "&#xe641;",
-			"href": "homeAdmin.html"
+			"href": "appAdmin/homeAdmin.html"
+		},{
+			"title": "banner管理",
+			"icon": "&#xe641;",
+			"href": "appAdmin/bannerAdmin.html"
 		}]
 	}];
