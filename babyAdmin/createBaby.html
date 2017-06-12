@@ -13,57 +13,227 @@
     <div class="form_create">
       <form class="layui-form" action="index.html" method="post">
         <div class="layui-form-item">
-          <label class="layui-form-label">手机号码：</label>
+          <label class="layui-form-label">注册手机：</label>
           <div class="layui-input-inline">
             <input type="tel" name="phone" lay-verify="phone" autocomplete="off" class="layui-input">
           </div>
-          <div class="layui-form-mid layui-word-aux">辅助文字</div>
+          <!-- <div class="layui-form-mid layui-word-aux">辅助文字</div> -->
+					<label class="layui-form-label">学历：</label>
+					<div class="layui-input-inline">
+						<select name="educations" lay-filter="educations">
+							<option value="">请选择学历</option>
+						</select>
+					</div>
+					<!-- <div class="layui-form-mid layui-word-aux">辅助文字</div> -->
         </div>
         <div class="layui-form-item">
-          <label class="layui-form-label">宝贝昵称：</label>
-          <div class="layui-input-inline">
-            <input type="text" name="title" required lay-verify="required" placeholder="请输入宝贝昵称" autocomplete="off" class="layui-input" value="">
-          </div>
-          <div class="layui-form-mid layui-word-aux">辅助文字</div>
+					<label class="layui-form-label">宝贝昵称：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="title" required lay-verify="required" placeholder="请输入宝贝昵称" autocomplete="off" class="layui-input" value="">
+					</div>
+					<label class="layui-form-label">职业：</label>
+					<div class="layui-input-inline">
+						<select name="occupation" lay-filter="occupation">
+							<option value="">职业</option>
+						</select>
+					</div>
         </div>
-        <div class="layui-form-item">
-          <label class="layui-form-label">生日：</label>
-          <div class="layui-input-inline">
-            <input class="layui-input" placeholder="生日" onclick="layui.laydate({elem: this, festival: true})">
-          </div>
-        </div>
-        <div class="layui-form-item">
-					<label class="layui-form-label">选择地区</label>
-          <div class="layui-input-inline">
-              <select name="province" lay-filter="province">
-                  <option value="">请选择省</option>
-              </select>
-          </div>
-          <div class="layui-input-inline" style="display: none;">
-              <select name="city" lay-filter="city">
-                  <option value="">请选择市</option>
-              </select>
-          </div>
-        </div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">民族：</label>
+					<div class="layui-input-inline">
+						<select name="nations" lay-filter="nations">
+							<option value="">请选择民族</option>
+						</select>
+					</div>
+					<label class="layui-form-label">籍贯：</label>
+					<div class="layui-input-inline">
+						<select name="province" lay-filter="province">
+							<option value="">请选择省</option>
+						</select>
+					</div>
+					<div class="layui-input-inline" style="display: none;">
+						<select name="city" lay-filter="city">
+							<option value="">请选择市</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">身高：</label>
+					<div class="layui-input-inline">
+						<select name="height" lay-filter="height">
+							<option value="">请选择身高</option>
+						</select>
+					</div>
+					<label class="layui-form-label">生日：</label>
+					<div class="layui-input-inline">
+						<input class="layui-input" placeholder="" onclick="layui.laydate({elem: this, festival: true })">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">体重：</label>
+					<div class="layui-input-inline">
+						<select name="weight" lay-filter="weight">
+							<option value="">请选择体重</option>
+						</select>
+					</div>
+					<label class="layui-form-label">性别：</label>
+					<div class="layui-input-inline">
+						<input type="radio" name="sex" value="男" title="男">
+						<input type="radio" name="sex" value="女" title="女">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">星座：</label>
+					<div class="layui-input-inline">
+						<select name="constellation" lay-filter="constellation">
+							<option value="">请选择星座</option>
+						</select>
+					</div>
+					<label class="layui-form-label">三围：</label>
+					<div class="layui-input-inline">
+						<select name="bust" lay-filter="bust">
+							<option value="">胸围</option>
+						</select>
+						<select name="waist" lay-filter="waist">
+							<option value="">腰围</option>
+						</select>
+						<select name="hipline" lay-filter="hipline">
+							<option value="">臀围</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label class="layui-form-label">图片上传：</label>
+					<div class="layui-form-block">
+						<input type="file" name="file" class="layui-upload-file" lay-title="添加图片">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">服务范围：</label>
+					<div class="layui-input-block" name="server-salce">
+						<!-- <input type="checkbox" name="" title="K歌" lay-skin="primary">
+						<input type="checkbox" name="" title="看电影" lay-skin="primary">
+						<input type="checkbox" name="" title="女伴" lay-skin="primary">
+						<input type="checkbox" name="" title="约会" lay-skin="primary">  -->
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">服务范围：</label>
+					<div class="layui-form-block" name="place-salce">
+					</div>
+				</div>
+				<div class="layui-form-item">
+			    <div class="layui-input-block">
+			      <button class="layui-btn" lay-submit lay-filter="formDemo">提交审核</button>
+			      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			    </div>
+			  </div>
       </form>
     </div>
 	</body>
 	<script type="text/javascript" src="../plugins/layui/layui.js"></script>
-	<script type="text/javascript" src="../js/area.js"></script>
+	<script type="text/javascript" src="../js/areaText.js"></script>
 	<script>
 			//初始数据
-			var areaData = Area;
 
-			var $form;
-			var form;
-			var $;
-			layui.use(['jquery', 'form'], function() {
+			var $form,form,$,laydate,layedit;
+			layui.use(['jquery', 'form','laydate','layedit', 'upload'], function() {
 				$ = layui.jquery;
+				layedit = layui.layedit;
+				laydate = layui.laydate;
 				form = layui.form();
 				$form = $('form');
-				loadProvince();
+				layui.upload({
+			    url: '' //上传接口
+			    ,success: function(res){ //上传成功后的回调
+			      console.log(res)
+			    }
+			  });
+				loadProvince();loadSelect();loadUpData();
 			});
 
+			var areaData = Area;
+			var nations = ["汉族","满族","蒙古族","回族","藏族","维吾尔族","苗族","彝族","壮族","布依族","朝鲜族","侗族","瑶族","白族","土家族",
+               "哈尼族","哈萨克族","傣族","黎族","傈僳族","佤族","畲族","高山族","拉祜族","水族","东乡族","纳西族","景颇族","柯尔克孜族",
+               "土族","达斡尔族","仫佬族","羌族","布朗族","撒拉族","毛南族","仡佬族","锡伯族","阿昌族","普米族","塔吉克族","怒族", "乌孜别克族",
+              "俄罗斯族","鄂温克族","德昂族","保安族","裕固族","京族","塔塔尔族","独龙族","鄂伦春族","赫哲族","门巴族","珞巴族","基诺族"];
+			var educations = ["中专","大专","本科","双学位","硕士","博士","博士后","其他"];
+			var occupation = ["在校学生","计算机/互联网/IT","电子/半导体/仪表仪器","通信技术","销售","市场拓展","公关/商务","采购/贸易",
+			"客户服务/技术支持","人力资源/行政/后勤","高级管理","生产/加工/制造","质控/安检","工程机械","技工","财会/审计/统计","金融/证券/投资/保险",
+		"房地产/装修/物业","仓储/物流","普通劳动力/家政服务","普通服务行业","航空服务业","教育/培训","咨询/顾问","学术/科研","法律","设计/创意",
+	"文学/传媒/影视","餐饮/旅游","化工","能源/地质勘查","医疗/护理","保健/美容","生物/制药/医疗器械","体育工作者","翻译","公务员/国家干部",
+	"私营业主","农/林/牧/渔业","警察/其它","自由职业者","其他"];
+			var serverScale = ["K歌","看电影","女伴","约会"];
+			var placeScale = ["所有场所","皇家公馆","戛纳国际娱乐会所","环球盛典KTV"];
+			var constellation = ["白羊座","金牛座","双子座","巨蟹座","狮子座","处女座","天枰座","天蝎座","射手座","摩羯座","水瓶座","双鱼座"];
+
+			function loadUpData(){
+				form.on('submit(formDemo)', function(data){
+			    layer.msg(JSON.stringify(data.field));
+			    return false;
+			  });
+			}
+
+			function loadSelect(){
+				var minHeight = 130,minWeight = 30,heightHtml = '',weightHtml = '',serverHtml = '',placeHtml = '',
+				minBust = 80,minWaist = 54,minHipline = 75,bustHtml = '',waistHtml = '',hiplineHtml = '';
+
+				//民族
+				createSelect('nations',nations)
+
+				//学历
+				createSelect('educations',educations)
+
+				//身高，体重
+				for(var i = 0;i < 61; i++){
+					heightHtml += '<option value="' + minHeight + '">' + minHeight + 'CM</option>';
+					weightHtml += '<option value="' + minWeight + '">' + minWeight + 'KG</option>';
+					minWeight++;
+					minHeight++;
+				}
+
+				//职业
+				createSelect('occupation',occupation)
+
+				//服务范围
+				for(var i =0; i < serverScale.length;i++){
+					serverHtml += '<input type="checkbox" name="" title="'+ serverScale[i] +'" lay-skin="primary">'
+				}
+
+				//服务场所
+				for(var i = 0; i < placeScale.length; i++){
+					placeHtml += '<input type="checkbox" name="" title="'+ placeScale[i] +'" lay-skin="primary">'
+				}
+
+				//三围
+				for(var i = 0; i < 20;i++){
+					bustHtml += '<option value="' + minBust + '">' + minBust + '</option>';
+					waistHtml += '<option value="' + minWaist + '">' + minWaist + '</option>';
+					hiplineHtml += '<option value="' + minHipline + '">' + minHipline + '</option>';
+					minHipline++;minWaist++;minBust++;
+				}
+
+				//星座
+				createSelect('constellation',constellation)
+
+				$form.find('select[name=height]').append(heightHtml);
+				$form.find('select[name=weight]').append(weightHtml);
+				$form.find('select[name=bust]').append(bustHtml);
+				$form.find('select[name=waist]').append(waistHtml);
+				$form.find('select[name=hipline]').append(hiplineHtml);
+				$form.find('div[name=server-salce]').append(serverHtml);
+				$form.find('div[name=place-salce]').append(placeHtml);
+				form.render();
+			}
+
+			function createSelect(name,data){
+				var dataHtml = '';
+				for(var i = 0; i < data.length;i++){
+					dataHtml += '<option value="' + data[i] + '">' + data[i] + '</option>';
+				}
+				$form.find('select[name='+ name +']').append(dataHtml);
+			}
 			function loadProvince() {
 				var proHtml = '';
 				for(var i = 0; i < areaData.length; i++) {
