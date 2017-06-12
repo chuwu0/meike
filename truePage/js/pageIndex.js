@@ -1,7 +1,10 @@
 $(function(){
 
     //tab下标，详情页地址,接口地址，包厢地址
-    var itemIndex = 0,detailUrl = '../views/details_first.html',dataUrl = 'http://118.178.227.195:8088/meike-mener';
+    var itemIndex = 0,
+        detailUrl = '../views/details_first.html',
+        // dataUrl = 'http://101.37.33.119:8088/meike-mener'; 线上地址
+        dataUrl = 'http://118.178.227.195:8088/meike-mener';  /*测试地址*/
 
     var theRequest = new Object(),ios = new Object();
     //处理url函数
@@ -35,6 +38,9 @@ $(function(){
       }, false);
   }
 
+  function addT(){
+    return '&t=' + new Date().getTime();
+  }
 
     function setupWebViewJavascriptBridge(callback) {
         if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
@@ -255,7 +261,7 @@ $(function(){
         $(window).scroll(lazyload);
 
         //当前页数，总页数
-        var tab1Page = 0,tab2Page = 0,pageCount = 10,downTime = 400;
+        var tab1Page = 0,tab2Page = 0,pageCount = 10,downTime = 200;
         var dropload = $('.content').dropload({
           scrollArea : window,
           //下拉文档
@@ -286,13 +292,12 @@ $(function(){
                 url: dataUrl + '/user/free/creditList.do',
                 dataType: 'json',
                 success: function(res){
-                  console.log(res.data);
                   pageCount = res.data.pageCount;
                   var data = res.data.creditList;
                   if(tab1Page <= pageCount+1){
                     for(var i = 0; i < data.length;i++){
                       result += '<li>'+
-                                '<a href="'+ detailUrl +'?userId=' + theRequest.userId +'&babyId='+ data[i].id + isHaveAddress() + dealOnline(data[i].serviceStatus,data[i].haveOrder) +'">'+
+                                '<a href="'+ detailUrl +'?userId=' + theRequest.userId +'&babyId='+ data[i].id + isHaveAddress() + dealOnline(data[i].serviceStatus,data[i].haveOrder) + addT() +'">'+
                                     '<div class="top-num">'+ (i+((tab1Page-1)*10) +1) +'</div>'+
                                     '<div class="baby-top">'+
                                        '<div class="top-pic">'+
@@ -328,7 +333,6 @@ $(function(){
                   }
                 },
                 error: function(xhr, type){
-                  console.log('ajax error!');
                   me.resetload();
                 }
               });
@@ -346,7 +350,7 @@ $(function(){
                   if(tab2Page <= pageCount){
                     for(var i = 0; i < data.length;i++){
                       result += '<li>'+
-                                '<a href="'+ detailUrl +'?userId=' + theRequest.userId +'&babyId='+ data[i].id + isHaveAddress() + dealOnline(data[i].serviceStatus,data[i].haveOrder) +'">'+
+                                '<a href="'+ detailUrl +'?userId=' + theRequest.userId +'&babyId='+ data[i].id + isHaveAddress() + dealOnline(data[i].serviceStatus,data[i].haveOrder) + addT() +'">'+
                                     '<div class="top-num">'+ (i+((tab2Page-1)*10) +1) +'</div>'+
                                     '<div class="baby-top">'+
                                        '<div class="top-pic">'+
@@ -358,7 +362,7 @@ $(function(){
                                        '<div class="baby-message">'+
                                            '<p class="baby-name"><strong>' + data[i].nickName + '</strong><span>' + data[i].age + '岁</span></p>'+
                                            '<p class="message-height"><em>' + data[i].height + 'cm</em><span>' + data[i].weight + 'kg</span></p>'+
-                                           '<div class="baby-list">已约'+ data[i].orderCounter +'单</div>'+
+                                           '<div class="baby-list">已约单：'+ data[i].orderCounter +'单</div>'+
                                        '</div>'+
                                    '</div>'+
                                 '</a>'+
@@ -400,7 +404,7 @@ $(function(){
                   if(tab1Page <= pageCount){
                     for(var i = 0; i < data.length;i++){
                       result += '<li>'+
-                                '<a href="'+ detailUrl +'?userId=' + theRequest.userId +'&babyId='+ data[i].id + isHaveAddress() + dealOnline(data[i].serviceStatus,data[i].haveOrder) +'">'+
+                                '<a href="'+ detailUrl +'?userId=' + theRequest.userId +'&babyId='+ data[i].id + isHaveAddress() + dealOnline(data[i].serviceStatus,data[i].haveOrder) + addT() +'">'+
                                     '<div class="top-num">'+ (i+((tab1Page-1)*10) +1) +'</div>'+
                                     '<div class="baby-top">'+
                                        '<div class="top-pic">'+
@@ -453,7 +457,7 @@ $(function(){
                   if(tab2Page <= data.length){
                     for(var i = 0; i < data.length;i++){
                       result += '<li>'+
-                                '<a href="'+ detailUrl +'?userId=' + theRequest.userId +'&babyId='+ data[i].id + isHaveAddress() + dealOnline(data[i].serviceStatus,data[i].haveOrder) +'">'+
+                                '<a href="'+ detailUrl +'?userId=' + theRequest.userId +'&babyId='+ data[i].id + isHaveAddress() + dealOnline(data[i].serviceStatus,data[i].haveOrder) + addT() +'">'+
                                     '<div class="top-num">'+ (i+((tab2Page-1)*10) +1) +'</div>'+
                                     '<div class="baby-top">'+
                                        '<div class="top-pic">'+
@@ -465,7 +469,7 @@ $(function(){
                                        '<div class="baby-message">'+
                                            '<p class="baby-name"><strong>' + data[i].nickName + '</strong><span>' + data[i].age + '岁</span></p>'+
                                            '<p class="message-height"><em>' + data[i].height + 'cm</em><span>' + data[i].weight + 'kg</span></p>'+
-                                           '<div class="baby-list">已约'+ data[i].orderCounter +'单</div>'+
+                                           '<div class="baby-list">已约单：'+ data[i].orderCounter +'单</div>'+
                                        '</div>'+
                                    '</div>'+
                                 '</a>'+

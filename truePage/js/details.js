@@ -4,6 +4,7 @@
 angular.module("detailApp", ['config','api'])
             .controller('detailCtr', [ '$scope', '$http','UrlConstant','$timeout',function( $scope, $http,UrlConstant,$timeout) {
                 $scope.babyInfo={};
+                $scope.showDetail=false;
                 // $scope.babyId=492;
                 // $scope.userId=1456;
                 $scope.babyId=Number(GetQueryString("babyId"));
@@ -25,8 +26,13 @@ angular.module("detailApp", ['config','api'])
                   if (data.code == 200) {
                     $scope.showBao = true;
                   }else{
+
                   }
                 });
+
+                function addT(){
+                  return '&t=' + new Date().getTime();
+                }
 
                 /*阻止用户双击使屏幕上滑*/
                 var agent = navigator.userAgent.toLowerCase();        //检测是否是ios
@@ -50,26 +56,22 @@ angular.module("detailApp", ['config','api'])
                     "babyId":$scope.babyId,
                     "UserId":$scope.userId
                 })}).success(function(data) {
-                    console.log(data);
+                    //alert(1)
+                    $scope.babyInfo=[];
                     $scope.babyInfo=data.data.baby;
                     $scope.scaleName= data.data.baby.scaleName;
                     $scope.rateAvg=data.data.rateAvg;
                     $scope.imgList=data.data.showImgs;
                     $scope.isAttention=data.data.isAttention;
                     $scope.scaleNameList=$scope.babyInfo.scaleName.split(",");
-                    console.log($scope.scaleName);
                     showStar($scope.rateAvg);
-                    // 图片轮播
-                    $timeout(function () {
-                            var swiper = new Swiper('.swiper-container', {
-                                nextButton: '.swiper-button-next',
-                                prevButton: '.swiper-button-prev',
-                                pagination: '.swiper-pagination',
-                                paginationType: 'fraction',
-                                loop:false
-                            });
-                    }, 10);
+                 
+                     
+
                 });
+                    $scope.load = function() {  
+                      $scope.showDetail=true; 
+                   }  
                 // 星星评级
                 function showStar(n){
                     var con_wid=document.getElementById("star_con").offsetWidth;
@@ -78,10 +80,6 @@ angular.module("detailApp", ['config','api'])
                     var del_move=(n*con_wid)/5;
                     del_star.style.backgroundPosition=-del_move+"px 0px";
                     del_star.style.left=del_move+"px";
-                }
-                //改变样式
-                $scope.changeClass=function(){
-                  $scope.isClass=!$scope.isClass;
                 }
 
                 function setupWebViewJavascriptBridge(callback) {
@@ -111,7 +109,6 @@ angular.module("detailApp", ['config','api'])
                             }else{
                               if($scope.inviteAddress){
                                 $scope.placeArr = $scope.babyInfo.placeName.split(",");
-                                console.log($scope.placeArr);
                                 if(data.code == 200){
                                   for (var i = 0; i < $scope.placeArr.length; i++) {
                                     if($scope.placeArr[i] == '其他' || $scope.placeArr[i] == $scope.inviteAddress || $scope.inviteAddress == '其他'){
@@ -121,14 +118,14 @@ angular.module("detailApp", ['config','api'])
                                        }
                                       }else{
                                         if($scope.treatStatus){
-                                            location.href="order.html?userId="+$scope.userId+'&hasChoose=true';
+                                            location.href="order.html?userId="+$scope.userId+'&hasChoose=true' + addT();
                                         }else{
                                             bridge.callHandler('commonFun', {}, function(response) {})
                                         }
                                       }
                                     }else{
                                       if(i >= $scope.placeArr.length-1){
-                                         $scope.falg = !$scope.falg;
+                                         $scope.baoShow = !$scope.baoShow;
                                        }
                                     }
                                     if($scope.baoShow){
@@ -139,14 +136,6 @@ angular.module("detailApp", ['config','api'])
                                       $timeout(function() {
                                           $scope.isShow = false;
                                       }, 2000);
-                                    }
-                                    if($scope.falg){
-                                      $scope.isShow=true;
-                                      $scope.content='宝贝服务地址与当前包厢地址不符！';
-                                      $timeout(function() {
-                                          $scope.isShow = false;
-                                      }, 2000);
-                                    }else{
                                     }
                                   }
                                 }else{
@@ -159,7 +148,7 @@ angular.module("detailApp", ['config','api'])
                               }else{
                                 if(data.code==200){
                                   if($scope.treatStatus){
-                                      location.href="order.html?userId="+$scope.userId+'&hasChoose=true';
+                                      location.href="order.html?userId="+$scope.userId+'&hasChoose=true' + addT();
                                     }else{
                                       if(val){
                                         $scope.haveClick=true;
@@ -195,7 +184,6 @@ angular.module("detailApp", ['config','api'])
                             "userId":$scope.userId,
                             "isAttention":$scope.isAttention
                         })}).success(function(data) {
-                            console.log(data);
                            $scope.isAttention=data.data;
                         })
                       }
@@ -203,10 +191,41 @@ angular.module("detailApp", ['config','api'])
 
                   $scope.baoxiang = function(){
                     if($scope.treatStatus){
-                       location.href="order.html?userId="+$scope.userId+'&hasChoose=true';
+                       location.href="order.html?userId="+$scope.userId+'&hasChoose=true' + addT();
                     }else{
                        bridge.callHandler('commonFun', {}, function(response) {})
                     }
                   }
                 });
-        }]);
+        }])
+
+.directive('resize',
+  function ($window) {
+    return function (scope, element) {
+     var w = angular.element($window);
+     var timer=null;
+    function changeImg() {
+     if(element[0].clientHeight<element[0].clientWidth){
+     	 $(element).css({'height':'100%','width':'auto'})
+       	var left=(element[0].clientWidth-s/10*3)/2
+       	 $(element).css({'margin-left':-left})
+      }else{
+       	var top=(element[0].clientHeight-element[0].clientWidth)/2
+       	$(element).css({'width':'100%','top':0})
+      }
+     	}
+      setTimeout(function(){
+   if(element[0].complete){
+   		changeImg()
+      	}else{
+
+      	 timer=setInterval(function(){
+      			if(element[0].complete){
+      				changeImg()
+      				clearInterval(timer)
+      			}
+      		},100)
+      	}
+      })
+    }
+})

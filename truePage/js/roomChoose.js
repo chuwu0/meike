@@ -42,10 +42,33 @@ angular.module("roomChooseApp", ['config','api'])
         });
 
 
+        // var date = new Date();
+        // var year = date.getFullYear();
+        // var month = date.getMonth()+1;
+        // var day = date.getDate();
+        // var hour = date.getHours()+2;
+        // var minute = date.getMinutes();
+        // var second = date.getSeconds();
+        // var minTime=year+'-'+month+'-'+day+'- '+hour+':'+minute+':'+second;
+        // var calendar = new datePicker();
+        // calendar.init({
+        //     'trigger': '#time', /*按钮选择器，用于触发弹出插件*/
+        //     'type': 'datetime',/*模式：date日期；datetime日期时间；time时间；ym年月；*/
+        //     'minDate':minTime,/*最小日期*/
+        //     'maxDate':'2100-12-31',/*最大日期*/
+        //     'onSubmit':function(){/*确认时触发事件*/
+        //         var theSelectData=calendar.value;
+        //         $scope.time=theSelectData;
+        //         storeElem("time", $scope.time);
+        //     },
+        //     'onClose':function(){/*取消时触发事件*/
+        //     }
+        // });
         var date = new Date();
         var year = date.getFullYear();
         var month = date.getMonth()+1;
         var day = date.getDate();
+        var nowHour=date.getHours();
         var hour = date.getHours()+2;
         var minute = date.getMinutes();
         var second = date.getSeconds();
@@ -55,15 +78,37 @@ angular.module("roomChooseApp", ['config','api'])
             'trigger': '#time', /*按钮选择器，用于触发弹出插件*/
             'type': 'datetime',/*模式：date日期；datetime日期时间；time时间；ym年月；*/
             'minDate':minTime,/*最小日期*/
-            'maxDate':'2100-12-31',/*最大日期*/
+            'maxDate':minTime,/*最大日期*/
             'onSubmit':function(){/*确认时触发事件*/
-                var theSelectData=calendar.value;
-                $scope.time=theSelectData;
-                storeElem("time", $scope.time);
             },
             'onClose':function(){/*取消时触发事件*/
             }
         });
+
+        var chooseTime=0;
+        $scope.changFun=function(){
+            var value=document.getElementById("time").value;
+            if(nowHour>=22 || nowHour<9){
+                $scope.isShow=true;
+                $scope.content="平台已暂停服务，请于9:00~22:00之间下单";
+            }else{
+                chooseTime=value.split(" ")[1].split(":")[0];
+                if(chooseTime-nowHour>=2){
+                    var theSelectData=value;
+                    storeElem("time",theSelectData);
+                    $scope.time=theSelectData;
+                }else{
+                    $scope.content="您只能预约两小时之后的订单";
+                    $scope.contentShow=true;
+                    $timeout(function(){
+                        $scope.contentShow=false;
+                    },2000);
+                    document.getElementById("time").value='';
+                    localStorage.removeItem("time");
+                    $scope.time="";
+                }
+            }
+        }
 
         // 选择具体的包厢
         $scope.roomInfo=function(item){
@@ -71,7 +116,6 @@ angular.module("roomChooseApp", ['config','api'])
             $scope.roomStandard=item.spec;
             $scope.price=item.price;
             $scope.number=item.spec+" "+item.price+"RMB"+" "+"包厢";
-            
             storeElem("number",$scope.number);
    			storeElem("roomPrice", $scope.price);
         };
@@ -94,30 +138,15 @@ angular.module("roomChooseApp", ['config','api'])
             }else{
      			storeElem("orderRoom","1");
                 if($scope.type1==1){
-                 // 包厢确认
-                    // $http.post(UrlConstant.url + "/order/rooms.do", {json:JSON.stringify({
-                    //     "addressId":$scope.addressId,
-                    //     "adress":$scope.adress,
-                    //     "roomStandard":$scope.roomStandard,
-                    //     "price":$scope.price,
-                    //     "userId":$scope.userId,
-                    //     "userPhone":$scope.phone,
-                    //     "userName":$scope.name,
-                    //     "bookTime":$scope.time
-                    // })}).success(function(data){
-                    //     console.log(data);
-                    // })
                     $timeout(function(){
-                        location.href='order_orderFirst.html';
+                        location.href='order_orderFirst.html?'+ addT();
                     },10);
-
                 }else{
-                    location.href='order.html';
+                    location.href='order.html?'+ addT();
                 }
             }
 
         };
-
 
 
     }]);

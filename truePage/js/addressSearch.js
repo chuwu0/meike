@@ -1,5 +1,7 @@
 $(function(){
 
+	var setUrl = 'http://101.37.33.119:8088/meike-mener';
+
 	theRequest = new Object();
     //处理url函数
     (function() {
@@ -13,15 +15,19 @@ $(function(){
 	   }
 	})();
 
+	function addT(){
+		return '&t=' + new Date().getTime();
+	}
+
 	$.ajax({
-		url: 'http://118.178.227.195:8088/meike-mener/user/free/seachPlaceName.do',
+		url: setUrl + '/user/free/seachPlaceName.do',
 		type:'GET',
 		data: {},
 		dataType: 'json',
 		success: function(res){
 			var data = res.data,dom = '';
 			for(var i = 0; i < data.length;i++){
-				dom += `<li><a href="babyList.html?userId=`+ theRequest.userId + `&address=` + data[i].address +`">`+ data[i].address +`</a><li>`;
+				dom += `<li><a href="babyList.html?userId=`+ theRequest.userId + `&address=` + data[i].address + addT() +`">`+ data[i].address +`</a><li>`;
 			}
 			$('#adressList').append(dom);
 		},
@@ -44,7 +50,7 @@ $(function(){
 			var data = JSON.stringify({'site': value});
 			$('#adressList').html('');
 			$.ajax({
-				url: 'http://118.178.227.195:8088/meike-mener/user/free/seachSite.do',
+				url: setUrl + '/user/free/seachSite.do',
 				type:'GET',
 				data: {'json': data},
 				dataType: 'json',
@@ -52,7 +58,7 @@ $(function(){
 					console.log(res);
 					var data = res.data,dom = '';
 					for(var i = 0; i < data.length;i++){
-						dom += `<li><a href="babyList.html?userId=`+ theRequest.userId + `&address=` + data[i].address +`">`+ data[i].address +`</a><li>`;
+						dom += `<li><a href="babyList.html?userId=`+ theRequest.userId + `&address=` + data[i].address + addT() +`">`+ data[i].address +`</a><li>`;
 					}
 					$('#adressList').append(dom);
 				},

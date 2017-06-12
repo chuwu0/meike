@@ -37,7 +37,7 @@
         <ul class="clear">
             <li class="clear"><span>联系电话：</span><input type="text" placeholder="请填写您真实的电话" maxlength="11" ng-model="phone" ng-readonly="true"></li>
             <li class="clear"><span>昵<em>空空</em>称：</span><input type="text" placeholder="请填写昵称" ng-model="name" ng-readonly="true"></li>
-            <li class="clear"><span>时<em>空空</em>间：</span><input type="text" placeholder="请填写见面时间" id="timeMeeting" ng-model="time" ng-readonly="true" ng-disabled="hasOrder">
+            <li class="clear"><span>时<em>空空</em>间：</span><input type="text" placeholder="请填写见面时间" id="timeMeeting" ng-model="time" ng-change="changFun()" ng-readonly="true" ng-disabled="hasOrder">
                 <p>*只能选择2小时之后的时间</p></li>
             <li class="clear"><span>地<em>空空</em>址：</span><input type="text"  placeholder="请填写真实可用的见面地址" ng-model="address" ng-focus="addressChoose()" ng-disabled="can"  ng-readonly="true"/><input class="num" type="text" placeholder="请填写具体的包厢号" ng-model="number" ng-change="store()" ng-disabled="can"/></li>
         </ul>
@@ -50,7 +50,7 @@
         <p>已选择宝贝：</p>
     </div>
     <ul class="invitars" id="invitars" >
-        <li class="clear" ng-repeat="(index,baby) in babyList" on-finish="ngRepeatFinished">
+        <li class="clear" ng-repeat="(index,baby) in babyList" repeat-done="RepeatFinished">
             <div class="person">
                 <img ng-src="{{baby.babyPhoto}}">
             </div>
@@ -71,7 +71,7 @@
     </ul>
 
     <div class="chosenBaby" ng-show="inviteShow">
-        <p>邀请名单：</p>
+        <p>邀请名单：(请拖动滑块选择请客额度)</p>
     </div>
     <ul class="inviteList">
         <li ng-repeat="(index,item) in invitedDetailList" on-finish="ngRepeatFinished">
@@ -83,7 +83,9 @@
                 <span></span>
                 <span></span>
                 <div class="green"></div>
-                <div class="dot"></div>
+                <div class="dotOuter">
+                    <div class="dot"></div>
+                </div>
             </div>
             <div class="text clear">
                 <span>￥0</span>
@@ -106,15 +108,6 @@
         <p class="total">合计：<span>￥{{count}}</span></p>
         <a class="count" href="javascript:;" ng-click="goCount()">去结算({{totalNum}})</a>
     </div>
-    <div class="mask" id="mask1" ng-show="isShow">
-        <div class="tip">
-            <p>{{content}}</p>
-            <a href="javascript:;" ng-click="know()">我知道了</a>
-        </div>
-    </div>
-    
-     <div class="layer-msg" ng-show="tipShow">{{contentTip}}</div>
-    
 </div>
 
 <!--购物车中没有妹子情况-->
@@ -136,8 +129,7 @@
         <ul class="clear">
             <li class="clear"><span>联系电话：</span><input type="text" placeholder="请填写您真实的电话" maxlength="11" ng-model="phone" ng-readonly="true"></li>
             <li class="clear"><span>昵<em>空空</em>称：</span><input type="text" placeholder="请填写昵称" ng-model="name" ng-readonly="true"></li>
-            <li class="clear"><span>时<em>空空</em>间：</span><input type="text" placeholder="请填写见面时间" id="timeMeeting"
-                                                                ng-model="time" ng-readonly="true" ng-disabled="hasOrder">
+            <li class="clear"><span>时<em>空空</em>间：</span><input type="text" placeholder="请填写见面时间" id="timeMeeting" ng-model="time" ng-readonly="true" ng-disabled="hasOrder">
                 <p>*只能选择2小时之后的时间</p></li>
             <li class="clear"><span>地<em>空空</em>址：</span><input type="text"  placeholder="请填写真实可用的见面地址" ng-model="address" ng-focus="addressFirst()" ng-disabled="can"/><input class="num" type="text" placeholder="请填写具体的包厢号" ng-model="number" ng-change="store()" ng-disabled="can"/></li>
         </ul>
@@ -151,40 +143,26 @@
     </div>
 </div>
 
+<div class="mask" id="mask1" ng-show="isShow">
+    <div class="tip">
+        <p>{{content}}</p>
+        <a href="javascript:;" ng-click="know()">我知道了</a>
+    </div>
+</div>
 
-<!--追加订单没有妹子的情况-->
-<!--<div class="container" ng-show="zhuiNoMei">-->
-    <!--<div class="orderInfo clear">-->
-        <!--<ul class="clear">-->
-            <!--<li class="clear"><span>联系电话：</span><input type="text" placeholder="请填写您真实的电话" maxlength="11" ng-model="phone" ng-readonly="true"></li>-->
-            <!--<li class="clear"><span>昵<em>空空</em>称：</span><input type="text" placeholder="请填写昵称" ng-model="name" ng-readonly="true"></li>-->
-            <!--<li class="clear"><span>时<em>空空</em>间：</span><input type="text" placeholder="请填写见面时间" id="timeMeeting" ng-model="time" ng-readonly="true" ng-disabled="readOnly">-->
-                <!--<p>*只能选择2小时之后的时间</p></li>-->
-            <!--<li class="clear"><span>地<em>空空</em>址：</span><input type="text"  placeholder="请填写真实可用的见面地址" ng-model="address" ng-focus="addressFirst()" ng-disabled="can"/><input class="num" type="text" placeholder="请填写具体的包厢号" ng-model="number" ng-change="store()" ng-disabled="can"/></li>-->
-        <!--</ul>-->
-        <!--<a class="addBaby"  ng-click="invitedChoose()">添加宝贝</a>-->
-    <!--</div>-->
-    <!---->
+<div class="layer-msg special" ng-show="tipShow" >{{contentTip}}</div>
 
-    <!--&lt;!&ndash;底部&ndash;&gt;-->
-    <!--<div class="bottom clear">-->
-        <!--<a href="javascript:;" class="toInvite clear" ng-click="goInvite()" ng-show="canInvite">-->
-            <!--<img src="../images/people.png"/>-->
-            <!--<span>去请客</span>-->
-        <!--</a>-->
-        <!--<p class="total">合计：<span>￥{{count}}</span></p>-->
-        <!--<a class="count" href="javascript:;" ng-click="goCount()">去结算({{totalNum}})</a>-->
-    <!--</div>-->
-    <!---->
-    <!---->
+<div class="mask" ng-show="sureAgainShow">
+    <div class="sureAgain">
+        <p>尊敬的客户您好，您的订单开始时间为{{hasTime}},由于下单时间较晚，宝贝可能无法按时到达，请您见谅</p>
+        <div class="btns clear">
+            <a href="javascript:;" ng-click="cancelOrder()">取消</a>
+            <a href="javascript:;" ng-click="continueOrder()">继续</a>
+        </div>
+    </div>
+</div>
 
-    <!--<div class="mask" id="mask1" ng-show="isShow">-->
-        <!--<div class="tip">-->
-            <!--<p>{{content}}</p>-->
-            <!--<a href="javascript:;" ng-click="know()">我知道了</a>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
+
 
 <script src="../js/app.js"></script>
 <script src="../js/order.js"></script>

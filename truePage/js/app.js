@@ -44,7 +44,8 @@ angular.module('config',['api'])
 
     angular.module('api', [])
         .value('UrlConstant',{
-        url:"http://118.178.227.195:8088/meike-mener"
+        url:"http://118.178.227.195:8088/meike-mener"           /*测试地址*/
+        // url:"http://101.37.33.119:8088/meike-mener"          /*线上地址*/
     });
 
 function GetQueryString(name) {
@@ -61,7 +62,8 @@ function getElem(name) {
     return localStorage.getItem(name);
 }
 
-angular.module('fang', []).directive('onFinish', function ($timeout) {
+angular.module('fang', [])
+    .directive('onFinish', function ($timeout) {
         return {
             restrict: 'A',
             link: function (scope, element, attr) {
@@ -71,4 +73,23 @@ angular.module('fang', []).directive('onFinish', function ($timeout) {
                     });
                 }
             }
+        }})
+
+    .directive('repeatDone', function ($timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attr) {
+                if (scope.$last === true) {
+                    $timeout(function () {
+                        scope.$emit('RepeatFinished');
+                    });
+                }
+            }
         }});
+
+
+
+// 添加时间戳
+function addT(){
+    return '&t=' + new Date().getTime();
+}

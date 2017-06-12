@@ -3,8 +3,11 @@ $(function() {
     //开始页数，总页数，延迟加载时间,详情页地址,是否有订单,已有订单地址
     var page = 1,
         pageCount = 10,
-        time = 400,
-        detailUrl = '../views/details_first.html';
+        time = 200,
+        detailUrl = '../views/details_first.html',
+        loadingDiv = $('<div></div>'),
+        // setUrl = 'http://101.37.33.119:8088/meike-mener'; 线上地址
+        setUrl = 'http://118.178.227.195:8088/meike-mener';    /*测试地址*/
 
     var theRequest = new Object();
     var ios = new Object();
@@ -68,6 +71,7 @@ $(function() {
                 ios.inviteAddress = data.inviteAddress;
                 localStorage.setItem('inviteAddress', data.inviteAddress);
                 ios.treatStatus = data.treatStatus;
+                ios.isRefresh = data.isRefresh;
 
                 var responseData = {
                     'callback': '回调成功！'
@@ -147,12 +151,23 @@ $(function() {
       }
     }
 
+    function addT(){
+      if(theRequest.treatStatus){
+        return '&t=' + new Date().getTime() + '&treatStatus=1'
+      }else{
+        return '&t=' + new Date().getTime();
+      }
+    }
+
     function lazyload(event) {
       var n = 0;
       var imgNum=$('.img-container img').length;img=$('.img-container img');
+      localStorage.setItem('pageY',window.pageYOffset);
+      localStorage.setItem('pageHtml',$('.lists').html());
+      localStorage.setItem('page',page);
       for (var i = n; i < imgNum; i++) {
         if (img.eq(i).offset().top < parseInt($(window).height()) + parseInt($(window).scrollTop())) {
-          if (img.eq(i).attr("src") == "") {
+          if (img.eq(i).attr("src") == "../images/loading.png") {
             var src = img.eq(i).attr("data-src");
             img.eq(i).attr("src", src);
             n = i + 1;
@@ -164,8 +179,8 @@ $(function() {
 
     //跳转搜索页面，需要将本页面的userId传入
     $('.searchUrl').attr('href',function() {
-            return 'addressSearch.html?userId=' + theRequest.userId;
-        });
+        return 'addressSearch.html?userId=' + theRequest.userId + addT();
+    });
 
     setTimeout(function() {
         ios.treatStatus = true;
@@ -188,6 +203,29 @@ $(function() {
                 } else {
                     return ''
                 }
+                if (theRequest.treatStatus) {
+                    return '&inviteAddress=' + inviteAddress + '&hasChose=true&treatStatus=' + theRequest.treatStatus
+                } else {
+                    return '&inviteAddress=' + inviteAddress + '&hasChose=true'
+                }
+            }
+            if(ios.isRefresh){
+              localStorage.setItem('pageHtml','');
+              localStorage.setItem('pageY',0);
+            }else{
+              if(localStorage.getItem('pageHtml')){
+                loadingDiv.css({
+                  'position': 'fixed',
+                  'bottom': '0',
+                  'left': '0',
+                  'right': '0',
+                  'top': '2.32rem',
+                  'background': '#f0f0f0'
+                })
+                $('body').append(loadingDiv);
+                $('.lists').append(localStorage.getItem('pageHtml'));
+                page = localStorage.getItem('page');
+              }
             }
             $('.content').dropload({
                 scrollArea: window,
@@ -209,7 +247,7 @@ $(function() {
 
                     var data, linkUrl, haveAddress;
                     $.ajax({
-                        url: 'http://118.178.227.195:8088/meike-mener/order/currentOrder.do',
+                        url: setUrl + '/order/currentOrder.do',
                         type: 'GET',
                         data: {
                             'json': JSON.stringify({
@@ -231,12 +269,12 @@ $(function() {
                             'pageNumb': page,
                             'clubhouse': theRequest.address
                         });
-                        linkUrl = 'http://118.178.227.195:8088/meike-mener/user/free/clubhouseSearchBaby.do';
+                        linkUrl = setUrl + '/user/free/clubhouseSearchBaby.do';
                     } else {
                         data = JSON.stringify({
                             'pageNumb': page
                         });
-                        linkUrl = 'http://118.178.227.195:8088/meike-mener/user/free/homePage.do';
+                        linkUrl = setUrl + '/user/free/homePage.do';
                     }
                     //判断传来inviteAddress是邀请身份进行筛选
                     if (inviteAddress) {
@@ -244,7 +282,7 @@ $(function() {
                             'pageNumb': page,
                             'clubhouse': inviteAddress
                         });
-                        linkUrl = 'http://118.178.227.195:8088/meike-mener/user/free/clubhouseSearchBaby.do';
+                        linkUrl = setUrl + '/user/free/clubhouseSearchBaby.do';
                     }
                     //判断当前是否有订单
                     if (haveAddress) {
@@ -252,7 +290,7 @@ $(function() {
                             'pageNumb': page,
                             'clubhouse': haveAddress
                         });
-                        linkUrl = 'http://118.178.227.195:8088/meike-mener/user/free/clubhouseSearchBaby.do';
+                        linkUrl = setUrl + '/user/free/clubhouseSearchBaby.do';
                         $('#index-search a').attr('href', 'javascript:void(0);')
                     } else {
                         if (theRequest.addressId) {
@@ -260,7 +298,7 @@ $(function() {
                                 'pageNumb': page,
                                 'clubhouse': theRequest.addressId
                             });
-                            linkUrl = 'http://118.178.227.195:8088/meike-mener/user/free/clubhouseSearchBaby.do';
+                            linkUrl = setUrl + '/user/free/clubhouseSearchBaby.do';
                             $('#index-search a').attr('href', 'javascript:void(0);')
                         }
                     }
@@ -272,14 +310,13 @@ $(function() {
                         url: linkUrl,
                         dataType: 'json',
                         success: function(res) {
-                          console.log(res.data);
                             var data = res.data.babyList;
                             var result = '';
                             page++;
                             pageCount = res.data.pageCount;
                             if (page <= pageCount + 1) {
                                 for (var i = 0; i < data.length; i++) {
-                                    result += '<a href="' + detailUrl + '?userId=' + theRequest.userId + '&babyId=' + data[i].id + dealinvite() + dealOnline(data[i].serviceStatus,data[i].haveOrder) + '">' + '<div class="img-container"><img data-src=' + data[i].showIndexImg + ' src=""/><div class="img-msg">' + '<p>' + data[i].nickName + ' <span class="hasNum">（' + data[i].orderCounter + '单）</span></p>' + '<div class="' + isOnline(data[i].serviceStatus,data[i].haveOrder) + '"><p>'+ isZaixian(data[i].serviceStatus,data[i].haveOrder) +'</p></div>' + '</div>' + '</div>' + '<div id="explain">' + '<div class="left-view">' + '<p>场所：' + getAdress(data[i].placeName) + '</p>' + '<p>范围：' + dealScale(data[i].scaleName) + '</p>' + '</div>' + '<div class="right-view">￥' + data[i].gradePrice + '/场次</div>' + '</div>' + '</a>';
+                                    result += '<span class="changeUrl" url="' + detailUrl + '?userId=' + theRequest.userId + '&babyId=' + data[i].id + dealinvite() + dealOnline(data[i].serviceStatus,data[i].haveOrder) + addT() +'">' + '<div class="img-container"><img data-src=' + data[i].showIndexImg + ' src="../images/loading.png"/><div class="img-msg">' + '<p>' + data[i].nickName + ' <span class="hasNum">（' + data[i].orderCounter + '单）</span></p>' + '<div class="' + isOnline(data[i].serviceStatus,data[i].haveOrder) + '"><p>'+ isZaixian(data[i].serviceStatus,data[i].haveOrder) +'</p></div>' + '</div>' + '</div>' + '<div id="explain">' + '<div class="left-view">' + '<p>场所：' + getAdress(data[i].placeName) + '</p>' + '<p>范围：' + dealScale(data[i].scaleName) + '</p>' + '</div>' + '<div class="right-view">￥' + data[i].gradePrice + '/场次</div>' + '</div>' + '</span>';
                                 }
                             } else {
                                 me.lock();
@@ -295,7 +332,6 @@ $(function() {
                                 },time);
                         },
                         error: function(xhr, type) {
-                            console.log('Ajax error!');
                             // 即使加载出错，也得重置
                             me.resetload();
                         }
@@ -306,7 +342,7 @@ $(function() {
                     page = 1;
                     var data, linkUrl, haveAddress;
                     $.ajax({
-                        url: 'http://118.178.227.195:8088/meike-mener/order/currentOrder.do',
+                        url: setUrl + '/order/currentOrder.do',
                         type: 'GET',
                         data: {
                             'json': JSON.stringify({
@@ -328,12 +364,12 @@ $(function() {
                             'pageNumb': page,
                             'clubhouse': theRequest.address
                         });
-                        linkUrl = 'http://118.178.227.195:8088/meike-mener/user/free/clubhouseSearchBaby.do';
+                        linkUrl = setUrl + '/user/free/clubhouseSearchBaby.do';
                     } else {
                         data = JSON.stringify({
                             'pageNumb': page
                         });
-                        linkUrl = 'http://118.178.227.195:8088/meike-mener/user/free/homePage.do';
+                        linkUrl = setUrl + '/user/free/homePage.do';
                     }
                     //判断传来inviteAddress是邀请身份进行筛选
                     if (inviteAddress) {
@@ -341,7 +377,7 @@ $(function() {
                             'pageNumb': page,
                             'clubhouse': inviteAddress
                         });
-                        linkUrl = 'http://118.178.227.195:8088/meike-mener/user/free/clubhouseSearchBaby.do';
+                        linkUrl = setUrl + '/user/free/clubhouseSearchBaby.do';
                     }
                     //判断当前是否有订单
                     if (haveAddress) {
@@ -349,7 +385,7 @@ $(function() {
                             'pageNumb': page,
                             'clubhouse': haveAddress
                         });
-                        linkUrl = 'http://118.178.227.195:8088/meike-mener/user/free/clubhouseSearchBaby.do';
+                        linkUrl = setUrl + '/user/free/clubhouseSearchBaby.do';
                         $('#index-search a').attr('href', 'javascript:void(0);')
                     } else {
                         if (theRequest.addressId) {
@@ -357,7 +393,7 @@ $(function() {
                                 'pageNumb': page,
                                 'clubhouse': theRequest.addressId
                             });
-                            linkUrl = 'http://118.178.227.195:8088/meike-mener/user/free/clubhouseSearchBaby.do';
+                            linkUrl = setUrl + '/user/free/clubhouseSearchBaby.do';
                             $('#index-search a').attr('href', 'javascript:void(0);')
                         }
                     }
@@ -375,7 +411,7 @@ $(function() {
                             page++;
                             if (page <= pageCount + 1) {
                                 for (var i = 0; i < data.length; i++) {
-                                    result += '<a href="' + detailUrl + '?userId=' + theRequest.userId + '&babyId=' + data[i].id + dealinvite() + dealOnline(data[i].serviceStatus,data[i].haveOrder) + '">' + '<div class="img-container" style="background-image: url(' + data[i].showIndexImg + ')">' + '<div class="img-msg">' + '<p>' + data[i].nickName + ' <span class="hasNum">（' + data[i].orderCounter + '单）</span></p>' + '<div class="' + isOnline(data[i].serviceStatus) + '"><p>'+ isZaixian(data[i].serviceStatus,data[i].haveOrder) +'</p></div>' + '</div>' + '</div>' + '<div id="explain">' + '<div class="left-view">' + '<p>场所：' + getAdress(data[i].placeName) + '</p>' + '<p>范围：' + dealScale(data[i].scaleName) + '</p>' + '</div>' + '<div class="right-view">￥' + data[i].gradePrice + '/场次</div>' + '</div>' + '</a>';
+                                    result += '<span class="changeUrl"  url="' + detailUrl + '?userId=' + theRequest.userId + '&babyId=' + data[i].id + dealinvite() + dealOnline(data[i].serviceStatus,data[i].haveOrder) + addT() +'">' + '<div class="img-container"><img data-src=' + data[i].showIndexImg + ' src="../images/loading.png"/><div class="img-msg">' + '<p>' + data[i].nickName + ' <span class="hasNum">（' + data[i].orderCounter + '单）</span></p>' + '<div class="' + isOnline(data[i].serviceStatus,data[i].haveOrder) + '"><p>'+ isZaixian(data[i].serviceStatus,data[i].haveOrder) +'</p></div>' + '</div>' + '</div>' + '<div id="explain">' + '<div class="left-view">' + '<p>场所：' + getAdress(data[i].placeName) + '</p>' + '<p>范围：' + dealScale(data[i].scaleName) + '</p>' + '</div>' + '<div class="right-view">￥' + data[i].gradePrice + '/场次</div>' + '</div>' + '</a>';
                                 }
                             } else {
                                 me.lock();
@@ -392,14 +428,30 @@ $(function() {
                                 time);
                         },
                         error: function(xhr, type) {
-                            console.log('Ajax error!');
                             // 即使加载出错，也得重置
                             me.resetload();
                         }
                     });
                 }
             })
+            var setN = localStorage.getItem('pageY');
+            var numH = setN;
+            var scrollTimer =  setInterval(function(){
+                window.scrollTo(0,numH);
+                loadingDiv.css('display','none');
+                if(numH == 0){
+                  lazyload();
+                }
+                if(numH == window.pageYOffset || !numH){
+                  clearInterval(scrollTimer);
+                }
+            },100);
         }
-    },
-    10);
+    },10);
+})
+$(document).on('click','.changeUrl',function(){
+    $('body').empty();
+    window.location.href=$(this).attr('url')
+    
+  // console.log($(this).attr('url'))
 })
